@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
+#include <ctime>
 
 using namespace std;
 
@@ -12,35 +13,58 @@ void printMonth(int, int&); // the first day of the next month
 void skip(int);// prints the specified amount of spaces
 void skipToDay(int);// prints leading spaces in monthly calendar
 void disaster(); // terminates program in case of unrecoverable errors 
+int firstDayMonth(int, int, int);
 
 int main()
 {
 	system("color f1 ");
-	int year, firstDayInCurrentMonth;
+	int year, firstDayInCurrentMonth, month, firstDayinMonth;
 	int currentMonth = 1;
 	int numDays;
 	bool leap;
 	cout << "What year do you want a calendar for? ";
 	cin >> year;
 	cout << endl;
-	firstDayInCurrentMonth = firstDayofnewyearMonth(year);
+	cout << "What month do you want calendar for?  ";
+	cin >> month;
+	cout << endl;
+	//firstDayInCurrentMonth = firstDayofnewyearMonth(year);
+	firstDayinMonth = firstDayMonth(year, month, 1);
+	cout << firstDayinMonth << endl;
 	leap = isLeapYear(year);
+
+	numDays = numOfDaysInMonth(month, leap);
+	printHeader(month);
+	printMonth(numDays, firstDayinMonth);
+
 	//skip(9);
 	cout << year << endl;
-	while (currentMonth <= 12)
+	/*while (currentMonth <= 12)
 	{
-		numDays = numOfDaysInMonth(currentMonth, leap);
-		printHeader(currentMonth);
-		printMonth(numDays, firstDayInCurrentMonth);
-		cout << endl << endl << endl;
-		currentMonth = currentMonth + 1;
+	numDays = numOfDaysInMonth(currentMonth, leap);
+	printHeader(currentMonth);
+	printMonth(numDays, firstDayInCurrentMonth);
+	cout << endl << endl << endl;
+	currentMonth = currentMonth + 1;
 	}
-	cout << endl;
+	cout << endl;*/
 }
 bool isLeapYear(int year)
 {
 	return   ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
+
+//returns first day of month given year and month
+int firstDayMonth(int y, int m, int d)
+{
+
+
+	static int t[] = { 0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4 };
+	y -= m < 3;
+	return (y + y / 4 - y / 100 + y / 400 + t[m - 1] + d) % 7;
+
+}
+
 
 //returns first day of year
 int  firstDayofnewyearMonth(int year)
