@@ -5,6 +5,8 @@
 
 using namespace std;
 
+
+//testing
 bool isLeapYear(int); //good check for leap years
 int firstDayofnewyearMonth(int);
 int numOfDaysInMonth(int, bool); // takes the number of the month, a flag saying whether year is leap
